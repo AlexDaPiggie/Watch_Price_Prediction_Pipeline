@@ -11,6 +11,19 @@ This project builds a simple end-to-end Machine Learning pipeline for predicting
 | MAE in dollars | $4,395 | Average dollar error. |
 | MAPE | 22.1% | Predictions are off by about 22% on average. |
 
+#
+**Run the pipeline by command: `python main.py`**
+#
+The video is sped up 20 times, showing how long it takes just for loading (not training).
+<p align = 'center'>
+  <img src = 'Images_GIF/Run_pipeline.gif' width = 60% alt = 'GIF video'>
+</p>
+
+#
+**NOTICE**:
+* The pipeline takes a long time to train model on the first run
+* If you don't have Kaggle API to fetch Watches.csv, **DOWNLOAD** [Watches.csv](https://www.kaggle.com/datasets/philmorekoung11/luxury-watch-listings) in the Workspace and **name it Watches.csv**.
+
 ### Project Structure 
 ```text
 Watch Price Pipeline
