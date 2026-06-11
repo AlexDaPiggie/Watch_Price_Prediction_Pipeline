@@ -99,11 +99,14 @@ about `$9M`
 | `sex` | Intended gender category, e.g. `Men's watch/Unisex`. | 95,805 | 33.68% |
 | `condition` | Original condition field. | 212,922 | 74.84% |
 
+## Data Cleaning
+`Data_Cleaning.py` clean the input data with logics derived from experiments in the notebook `Cleaning_Experiment.ipynb`. The Cleaning logic is simple, involving nan-summary, imputation, and flagging keywords. **See the notebook `Cleaning_Experiment.ipynb` for more details**
+
 ## Modeling
 
 `Modeling.py`  uses the cleaned train and test sets created from `Data_Cleaning.py`. The target variable, `price` is log-transformed before training to reduct the impact of extreme outliers. The final model is a fine-tuned Extra Trees Regressor wrapped in a scikit-learn pipeline. This helps handle feature engineering, encoding, training, evaluation, and model saving.
 
-### Why Log-Transformed ? 
+## Explonatory Data Analysis
 
 Log Transformation make the signal of the `price` feature much more vivid. See the notebook `EDA.ipynb` for more details.
 
@@ -111,6 +114,23 @@ Log Transformation make the signal of the `price` feature much more vivid. See t
   <img src = 'Images_GIF/Original_Price.png' width = 45% alt = "Original">
   <img src = 'Images_GIF/Log_Transformed_Price.png' width = 45% alt = "Log transformed">
 </p>
+
+`watch_age` and `case_size_mm` do not have a direct relationship with `log_price`. Many watches with different year of production and case size still have the same size:
+
+<p align='center'>
+  <img src = 'Images_GIF/Watch_Age_Distribution.png' width = '48%' alt = 'Watchage vs price'>
+  <img src = 'Images_GIF/Case_Size_Distribution.png' width = '48%' alt = 'casesize vs price'>
+</p>
+
+Brand and Models are the strong features driving the price:
+
+<p align='center'>
+  <img src = 'Images_GIF/Brand_price.png' width = '48%' alt = 'Model vs price'>
+  <img src = 'Images_GIF/Model_price.png' width = '48%' alt = 'Brand vs price'>
+</p>
+
+Further Analysis is described in the notebook `EDA.ipynb`
+
     
 ### Feature Engineering
 
@@ -158,24 +178,6 @@ flowchart LR
   ref --> ref_flags["'ref_has_slash'<br/>'ref_has_dash'<br/>'ref_has_dot'"]
 ```
 
-## Explonatory Data Analysis
-
-`watch_age` and `case_size_mm` do not have a direct relationship with `log_price`. Many watches with different year of production and case size still have the same size:
-
-<p align='center'>
-  <img src = 'Images_GIF/Watch_Age_Distribution.png' width = '48%' alt = 'Watchage vs price'>
-  <img src = 'Images_GIF/Case_Size_Distribution.png' width = '48%' alt = 'casesize vs price'>
-</p>
-
-Brand and Models are the strong features driving the price:
-
-<p align='center'>
-  <img src = 'Images_GIF/Brand_price.png' width = '48%' alt = 'Model vs price'>
-  <img src = 'Images_GIF/Model_price.png' width = '48%' alt = 'Brand vs price'>
-</p>
-
-Detailed Analysis is described in the notebook `EDA.ipynb`
-
 ## Model Selection
 ### Linear Models (See `Linear_Modeling.ipynb` for more details)
 Ridge Regression was used as the linear baseline because it is stable with many encoded features and uses L2 regularization to reduce overfitting.
@@ -187,6 +189,8 @@ Ridge Regression was used as the linear baseline because it is stable with many 
 | ElasticNet | 0.393 | $5,988 | $68,471 | 0.913 |
 | SGD Huber | 0.587 | $9,124 | $75,476 | 0.805 |
 
+#
+
 ### Non-Linear Models (See more details in `Tree_Modeling.ipynb`)
 HistGradientBoostingRegressor was used as the first non-linear baseline because it can learn feature interactions such as brand × model, condition × model, and material × brand.
 
@@ -195,3 +199,22 @@ HistGradientBoostingRegressor was used as the first non-linear baseline because 
 |Extra Trees |0.326 |$4,694 |$67,125 |0.940 |
 |Random Forest |0.341 |$5,184 |$66,520 |0.934 |
 |Hist Gradient Boosting |0.365 |$6,123 |$65,500 |0.924 |
+
+As can be seen, Extra Trees and Random Forest outperformed the other models on most metrics
+
+#
+
+## Hyperparameter Tuning 
+The project uses Optuna Framework to fine-tune hyperparameters of Extra Trees model. The performance of the fine-tuned version improved slighly on validation set:
+
+```text
+|'rmse_log': 0.32563894526069087
+|'mae_dollars': 4686.013778271804
+|'rmse_dollars': 66581.35564151255
+|'r2_log': 0.9399490035775266
+```
+
+(See the notebook `Tree_Modeling.ipynb` for more details)
+
+**The logic in Tree_Modeling.ipynb is converted to Modeling.py, finishing the second phase of the pipeline**
+
