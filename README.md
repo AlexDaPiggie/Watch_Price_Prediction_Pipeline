@@ -155,9 +155,10 @@ flowchart LR
 </p>
 
 Brand and Models are the strong features driving the price:
+
 <p align='center'>
-  <img src = 'Images_Gif/Brand_vs_Price.png' width = 40% alt = 'model vs price'>
-  <img src = 'Images_Gif/Model_vs_Price.png' width = 40% alt = 'Brand vs price'>
+  <img src = 'Images_Gif/Brand_price.png' width = 40% alt = 'Model vs price'>
+  <img src = 'Images_Gif/Model_price.png' width = 40% alt = 'Brand vs price'>
 </p>
 
 Detailed Analysis is described in the notebook `EDA.ipynb`
