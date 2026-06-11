@@ -507,6 +507,8 @@ class WatchDataCleaner(BaseEstimator, TransformerMixin):
         return df
 
 def main():
+    print (f"-"*16)
+    print ('START CLEANING DATA')
     
     if os.path.exists('Watches_train_cleaned.csv') and os.path.exists('Watches_test_cleaned.csv'): 
         print ('Data Has Already Been Cleaned')
@@ -544,6 +546,8 @@ def main():
 
         test_cleaned.to_csv(test_output_path, index=False)
         print ('Updated Watches_test_cleaned.csv')
+    print ('FINISH CLEANING DATA')
+    print (f"-"*16)
 
 if __name__ == "__main__":
     main()
