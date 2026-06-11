@@ -100,13 +100,22 @@ about `$9M`
 | `condition` | Original condition field. | 212,922 | 74.84% |
 
 ## Data Cleaning
-`Data_Cleaning.py` clean the input data with logics derived from experiments in the notebook `Cleaning_Experiment.ipynb`. The Cleaning logic is simple, involving nan-summary, imputation, and flagging keywords. **See the notebook `Cleaning_Experiment.ipynb` for more details**
+`Data_Cleaning.py` does the first phase of the pipeline, which is cleaning  the input data. The logics are derived from experiments in the notebook `Cleaning_Experiment.ipynb`. 
+
+
+The cleaning logics involve: 
+* Grouping techinques to summarize & impute missing values (nan)
+* Flagging techinuqes to extract important keywords
+
+**See the notebook `Cleaning_Experiment.ipynb` for more details**
 
 ## Modeling
 
-`Modeling.py`  uses the cleaned train and test sets created from `Data_Cleaning.py`. The target variable, `price` is log-transformed before training to reduct the impact of extreme outliers. The final model is a fine-tuned Extra Trees Regressor wrapped in a scikit-learn pipeline. This helps handle feature engineering, encoding, training, evaluation, and model saving.
+`Modeling.py`  uses the cleaned train and test sets created from `Data_Cleaning.py`. The final model is a fine-tuned Extra Trees Regressor wrapped in a scikit-learn pipeline. This helps handle feature engineering, encoding, training, evaluation, and model saving.
 
-## Explonatory Data Analysis
+**See the notebook `Tree_Modeling.ipynb` for more details**
+
+## Key info from EDA (Explonatory Data Analysis)
 
 Log Transformation make the signal of the `price` feature much more vivid. See the notebook `EDA.ipynb` for more details.
 
@@ -129,10 +138,9 @@ Brand and Models are the strong features driving the price:
   <img src = 'Images_GIF/Model_price.png' width = '48%' alt = 'Brand vs price'>
 </p>
 
-Further Analysis is described in the notebook `EDA.ipynb`
-
+**Further Analysis is described in the notebook `EDA.ipynb`**
     
-### Feature Engineering
+## Feature Engineering
 
 The engineered features is created as below. View  the notebook `Tree_Modeling.ipynb` for the detailed process.
 
@@ -182,6 +190,8 @@ flowchart LR
 ### Linear Models (See `Linear_Modeling.ipynb` for more details)
 Ridge Regression was used as the linear baseline because it is stable with many encoded features and uses L2 regularization to reduce overfitting.
 
+
+**Peformance on Validation set:**
 | Model | RMSE log | MAE dollars | RMSE dollars | R² log |
 | :--- | ---: | ---: | ---: | ---: |
 | Ridge | 0.363 | $5,326 | $66,540 | 0.925 |
@@ -194,24 +204,37 @@ Ridge Regression was used as the linear baseline because it is stable with many 
 ### Non-Linear Models (See more details in `Tree_Modeling.ipynb`)
 HistGradientBoostingRegressor was used as the first non-linear baseline because it can learn feature interactions such as brand × model, condition × model, and material × brand.
 
+
+**Peformance on Validation set:**
 |Model |RMSE log |MAE dollars |RMSE dollars |R² log|
 |:--- |---: |---: |---: |---:|
 |Extra Trees |0.326 |$4,694 |$67,125 |0.940 |
 |Random Forest |0.341 |$5,184 |$66,520 |0.934 |
 |Hist Gradient Boosting |0.365 |$6,123 |$65,500 |0.924 |
 
-As can be seen, Extra Trees and Random Forest outperformed the other models on most metrics
+#
+
+
+**As can be seen, Extra Trees and Random Forest outperformed the other models on most metrics**
 
 #
 
 ## Hyperparameter Tuning 
-The project uses Optuna Framework to fine-tune hyperparameters of Extra Trees model. The performance of the fine-tuned version improved slighly on validation set:
+The project uses Optuna Framework to fine-tune hyperparameters of Extra Trees model. 
+**Code**
+<p align = 'left'>
+  <img src = 'Images_GIF/Hyperparameter_Tuning.png' width = 70% alt = 'hyper'>
+</p>
+
+#
+
+The performance of the fine-tuned version improved slighly on validation set:
 
 ```text
-|'rmse_log': 0.32563894526069087
-|'mae_dollars': 4686.013778271804
-|'rmse_dollars': 66581.35564151255
-|'r2_log': 0.9399490035775266
+'rmse_log': 0.32563894526069087
+'mae_dollars': 4686.013778271804
+'rmse_dollars': 66581.35564151255
+'r2_log': 0.9399490035775266
 ```
 
 (See the notebook `Tree_Modeling.ipynb` for more details)
