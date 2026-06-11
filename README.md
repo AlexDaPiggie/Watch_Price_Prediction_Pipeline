@@ -150,15 +150,15 @@ flowchart LR
 `watch_age` and `case_size_mm` do not have a direct relationship with `log_price`. Many watches with different year of production and case size still have the same size:
 
 <p align='center'>
-  <img src = 'Images_GIF/Watch_Age_Distribution.png' width = '40%' alt = 'Watchage vs price'>
-  <img src = 'Images_GIF/Case_Size_Distribution.png' width = '40%' alt = 'casesize vs price'>
+  <img src = 'Images_GIF/Watch_Age_Distribution.png' width = '48%' alt = 'Watchage vs price'>
+  <img src = 'Images_GIF/Case_Size_Distribution.png' width = '48%' alt = 'casesize vs price'>
 </p>
 
 Brand and Models are the strong features driving the price:
 
 <p align='center'>
-  <img src = 'Images_GIF/Brand_price.png' width = 40% alt = 'Model vs price'>
-  <img src = 'Images_GIF/Model_price.png' width = 40% alt = 'Brand vs price'>
+  <img src = 'Images_GIF/Brand_price.png' width = '48%' alt = 'Model vs price'>
+  <img src = 'Images_GIF/Model_price.png' width = '48%' alt = 'Brand vs price'>
 </p>
 
 Detailed Analysis is described in the notebook `EDA.ipynb`
