@@ -11,13 +11,13 @@ This project builds a simple end-to-end Machine Learning pipeline for predicting
 | MAE in dollars | $4,395 | Average dollar error. |
 | MAPE | 22.1% | Predictions are off by about 22% on average. |
 
+## Commands:
+### **Run the pipline with `python main.py`  &  Download requirements with pip install -r requirements.txt**
 #
-**Run the pipeline by command: `python main.py`**
-#
-The video is sped up 20 times, showing how long it takes just for loading (not training).
-<p align = 'center'>
-  <img src = 'Images_GIF/Run_pipeline.gif' width = 60% alt = 'GIF video'>
+<p align = 'left'>
+  <img src = 'Images_GIF/Run_pipeline.gif' width = 70% alt = 'GIF video'>
 </p>
+(The video is sped up 20 times, showing how long it takes just for loading (not training))
 
 #
 **NOTICE**:
@@ -221,7 +221,9 @@ HistGradientBoostingRegressor was used as the first non-linear baseline because 
 
 ## Hyperparameter Tuning 
 The project uses Optuna Framework to fine-tune hyperparameters of Extra Trees model. 
-**Code**
+
+
+**Code:**
 <p align = 'left'>
   <img src = 'Images_GIF/Hyperparameter_Tuning.png' width = 70% alt = 'hyper'>
 </p>
